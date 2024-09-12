@@ -22,6 +22,9 @@ DateTime? dateTimeFromEpochSeconds(dynamic seconds) {
       : DateTime.fromMillisecondsSinceEpoch(epochSeconds * 1000);
 }
 
+List<String> backdropConverter(dynamic json) =>
+    json is List ? json.map((e) => e as String).toList() : [];
+
 /// Converts a string in ISO 8601 format to a [DateTime].
 /// Returns null if [dateTime] is null or empty.
 DateTime? dateTimeFromString(String? dateTime) =>

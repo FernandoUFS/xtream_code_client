@@ -10,7 +10,8 @@ XTremeCodeVodInfo _$XTremeCodeVodInfoFromJson(Map<String, dynamic> json) =>
     XTremeCodeVodInfo(
       info: XTremeCodeInfoVod.fromJson(json['info'] as Map<String, dynamic>),
       movieData: XTremeCodeMovieData.fromJson(
-          json['movie_data'] as Map<String, dynamic>,),
+        json['movie_data'] as Map<String, dynamic>,
+      ),
     );
 
 Map<String, dynamic> _$XTremeCodeVodInfoToJson(XTremeCodeVodInfo instance) =>
@@ -27,9 +28,7 @@ XTremeCodeInfoVod _$XTremeCodeInfoVodFromJson(Map<String, dynamic> json) =>
       oName: json['o_name'] as String?,
       coverBig: json['cover_big'] as String?,
       movieImage: json['movie_image'] as String?,
-      releaseDate: json['release_date'] == null
-          ? null
-          : DateTime.parse(json['release_date'] as String),
+      releaseDate: dateTimeFromString(json['release_date'] as String?),
       episodeRunTime: dynamicToIntConverter(json['episode_run_time']),
       youtubeTrailer: json['youtube_trailer'] as String?,
       director: json['director'] as String?,
@@ -43,17 +42,13 @@ XTremeCodeInfoVod _$XTremeCodeInfoVodFromJson(Map<String, dynamic> json) =>
           dynamicToIntConverter(json['rating_count_kinopoisk']),
       country: json['country'] as String?,
       genre: json['genre'] as String?,
-      backdropPath: (json['backdrop_path'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      backdropPath: backdropConverter(json['backdrop_path']),
       durationSecs: dynamicToIntConverter(json['duration_secs']),
       duration: json['duration'] as String?,
       bitrate: dynamicToIntConverter(json['bitrate']),
       rating: dynamicToDoubleConverter(json['rating']),
-      releasedate: json['releasedate'] == null
-          ? null
-          : DateTime.parse(json['releasedate'] as String),
-      subtitles: json['subtitles'] as List<dynamic>,
+      releasedate: dateTimeFromString(json['releasedate'] as String?),
+      subtitles: json['subtitles'] as List<dynamic>?,
     );
 
 Map<String, dynamic> _$XTremeCodeInfoVodToJson(XTremeCodeInfoVod instance) =>
@@ -90,19 +85,20 @@ XTremeCodeMovieData _$XTremeCodeMovieDataFromJson(Map<String, dynamic> json) =>
     XTremeCodeMovieData(
       streamId: dynamicToIntConverter(json['stream_id']),
       name: json['name'] as String,
-      title: json['title'] as String,
-      year: json['year'] as String,
+      title: json['title'] as String?,
+      year: json['year'] as String?,
       added: dateTimeFromEpochSeconds(json['added']),
       categoryId: dynamicToIntConverter(json['category_id']),
-      categoryIds:
-          (json['category_ids'] as List<dynamic>).map((e) => e as int).toList(),
+      categoryIds: (json['category_ids'] as List<dynamic>?)
+          ?.map((e) => (e as num).toInt())
+          .toList(),
       containerExtension: json['container_extension'] as String,
       customSid: json['custom_sid'] as String?,
-      directSource: json['direct_source'] as String,
+      directSource: json['direct_source'] as String?,
     );
 
 Map<String, dynamic> _$XTremeCodeMovieDataToJson(
-        XTremeCodeMovieData instance,) =>
+        XTremeCodeMovieData instance) =>
     <String, dynamic>{
       'stream_id': instance.streamId,
       'name': instance.name,

@@ -88,7 +88,7 @@ class XTremeCodeInfoVod {
   final String? movieImage;
 
   /// The release date of the movie.
-  @JsonKey(name: 'release_date')
+  @JsonKey(name: 'release_date', fromJson: dateTimeFromString)
   final DateTime? releaseDate;
 
   /// The runtime of the episode in minutes.
@@ -132,8 +132,8 @@ class XTremeCodeInfoVod {
   final String? genre;
 
   /// The backdrop images of the movie.
-  @JsonKey(name: 'backdrop_path')
-  final List<String>? backdropPath;
+  @JsonKey(name: 'backdrop_path', fromJson: backdropConverter)
+  final List<String> backdropPath;
 
   /// The duration of the movie in seconds.
   @JsonKey(name: 'duration_secs', fromJson: dynamicToIntConverter)
@@ -151,10 +151,11 @@ class XTremeCodeInfoVod {
   final double? rating;
 
   /// The release date of the movie.
+  @JsonKey(fromJson: dateTimeFromString)
   final DateTime? releasedate;
 
   /// The subtitles of the movie.
-  final List<dynamic> subtitles;
+  final List<dynamic>? subtitles;
 
   /// Converts this instance into a JSON object.
   Map<String, dynamic> toJson() => _$XTremeCodeInfoVodToJson(this);
@@ -189,10 +190,10 @@ class XTremeCodeMovieData {
   final String name;
 
   /// The title of the movie.
-  final String title;
+  final String? title;
 
   /// The year the movie was released.
-  final String year;
+  final String? year;
 
   /// The date the movie was added.
   @JsonKey(fromJson: dateTimeFromEpochSeconds)
@@ -204,7 +205,7 @@ class XTremeCodeMovieData {
 
   /// The IDs of the categories the movie belongs to.
   @JsonKey(name: 'category_ids')
-  final List<int> categoryIds;
+  final List<int>? categoryIds;
 
   /// The container extension of the movie.
   @JsonKey(name: 'container_extension')
@@ -216,7 +217,7 @@ class XTremeCodeMovieData {
 
   /// The direct source of the movie.
   @JsonKey(name: 'direct_source')
-  final String directSource;
+  final String? directSource;
 
   /// Converts this instance into a JSON object.
   Map<String, dynamic> toJson() => _$XTremeCodeMovieDataToJson(this);

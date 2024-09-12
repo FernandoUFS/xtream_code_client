@@ -73,7 +73,7 @@ class XTremeCodeSeason {
   final int? seasonNumber;
 
   /// The average vote of the season.
-  @JsonKey(name: 'vote_average',  fromJson: dynamicToDoubleConverter)
+  @JsonKey(name: 'vote_average', fromJson: dynamicToDoubleConverter)
   final double? voteAverage;
 
   /// The cover image of the season.
@@ -140,6 +140,7 @@ class XTremeCodeInfo {
   final String? genre;
 
   /// The release date of the series.
+  @JsonKey(fromJson: dateTimeFromString)
   final DateTime? releaseDate;
 
   /// The last modified date of the series.
@@ -155,7 +156,7 @@ class XTremeCodeInfo {
   final double? rating5based;
 
   /// The backdrop path of the series.
-  @JsonKey(name: 'backdrop_path')
+  @JsonKey(name: 'backdrop_path', fromJson: backdropConverter)
   final List<String> backdropPath;
 
   /// The YouTube trailer of the series.
@@ -172,7 +173,7 @@ class XTremeCodeInfo {
 
   /// The IDs of the categories of the series.
   @JsonKey(name: 'category_ids')
-  final List<int> categoryIds;
+  final List<int>? categoryIds;
 
   /// Converts this instance into a JSON object.
   Map<String, dynamic> toJson() => _$XTremeCodeInfoToJson(this);
@@ -218,7 +219,7 @@ class XTremeCodeEpisode {
   final XTremeCodeEpisodeInfo info;
 
   /// The subtitles of the episode.
-  final List<String> subtitles;
+  final List<String>? subtitles;
 
   /// The custom SID of the episode.
   @JsonKey(name: 'custom_sid')
@@ -266,7 +267,7 @@ class XTremeCodeEpisodeInfo {
   final int? tmdbId;
 
   /// The release date of the episode.
-  @JsonKey(name: 'release_date')
+  @JsonKey(name: 'release_date', fromJson: dateTimeFromString)
   final DateTime? releaseDate;
 
   /// The plot of the episode.

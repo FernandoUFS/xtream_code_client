@@ -69,21 +69,18 @@ XTremeCodeInfo _$XTremeCodeInfoFromJson(Map<String, dynamic> json) =>
       cast: json['cast'] as String?,
       director: json['director'] as String?,
       genre: json['genre'] as String?,
-      releaseDate: json['releaseDate'] == null
-          ? null
-          : DateTime.parse(json['releaseDate'] as String),
+      releaseDate: dateTimeFromString(json['releaseDate'] as String?),
       lastModified: dateTimeFromEpochSeconds(json['last_modified']),
       rating: dynamicToDoubleConverter(json['rating']),
       rating5based: dynamicToDoubleConverter(json['rating_5based']),
-      backdropPath: (json['backdrop_path'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      backdropPath: json['backdrop_path'] == null
+          ? const []
+          : backdropConverter(json['backdrop_path']),
       youtubeTrailer: json['youtube_trailer'] as String?,
       episodeRunTime: dynamicToIntConverter(json['episode_run_time']),
       categoryId: dynamicToIntConverter(json['category_id']),
       categoryIds: (json['category_ids'] as List<dynamic>?)
-              ?.map((e) => e as int)
+              ?.map((e) => (e as num).toInt())
               .toList() ??
           const [],
     );
@@ -117,8 +114,9 @@ XTremeCodeEpisode _$XTremeCodeEpisodeFromJson(Map<String, dynamic> json) =>
       containerExtension: json['container_extension'] as String?,
       info:
           XTremeCodeEpisodeInfo.fromJson(json['info'] as Map<String, dynamic>),
-      subtitles:
-          (json['subtitles'] as List<dynamic>).map((e) => e as String).toList(),
+      subtitles: (json['subtitles'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       customSid: json['custom_sid'] as String?,
       added: dateTimeFromEpochSeconds(json['added']),
       season: dynamicToIntConverter(json['season']),
@@ -143,9 +141,7 @@ XTremeCodeEpisodeInfo _$XTremeCodeEpisodeInfoFromJson(
         Map<String, dynamic> json) =>
     XTremeCodeEpisodeInfo(
       tmdbId: dynamicToIntConverter(json['tmdb_id']),
-      releaseDate: json['release_date'] == null
-          ? null
-          : DateTime.parse(json['release_date'] as String),
+      releaseDate: dateTimeFromString(json['release_date'] as String?),
       plot: json['plot'] as String?,
       durationSecs: dynamicToIntConverter(json['duration_secs']),
       duration: json['duration'] as String?,
